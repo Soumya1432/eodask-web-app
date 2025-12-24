@@ -7,9 +7,15 @@ export const ProfilePage: React.FC = () => {
   const { user } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+
+  // Split name into firstName and lastName
+  const nameParts = user?.name?.split(' ') || [];
+  const initialFirstName = nameParts[0] || '';
+  const initialLastName = nameParts.slice(1).join(' ') || '';
+
   const [formData, setFormData] = useState({
-    firstName: user?.firstName || '',
-    lastName: user?.lastName || '',
+    firstName: initialFirstName,
+    lastName: initialLastName,
     email: user?.email || '',
     phone: '',
     bio: '',
@@ -34,8 +40,9 @@ export const ProfilePage: React.FC = () => {
   };
 
   const getInitials = () => {
-    const firstName = user?.firstName || user?.name?.split(' ')[0] || '';
-    const lastName = user?.lastName || user?.name?.split(' ')[1] || '';
+    const parts = user?.name?.split(' ') || [];
+    const firstName = parts[0] || '';
+    const lastName = parts[1] || '';
     return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase() || 'U';
   };
 

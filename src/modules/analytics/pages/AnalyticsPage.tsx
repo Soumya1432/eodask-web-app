@@ -155,7 +155,8 @@ export const AnalyticsPage: React.FC = () => {
       setLastUpdated(new Date());
     });
 
-    const unsubscribeStatUpdated = on('analytics:stat_updated', (data: { metric: string; value: unknown }) => {
+    const unsubscribeStatUpdated = on('analytics:stat_updated', ((...args: unknown[]) => {
+      const data = args[0] as { metric: string; value: unknown };
       setAnalytics(prev => {
         if (!prev) return prev;
         return {
@@ -167,7 +168,7 @@ export const AnalyticsPage: React.FC = () => {
         };
       });
       setLastUpdated(new Date());
-    });
+    }) as (...args: unknown[]) => void);
 
     // Also listen for task events to trigger analytics refresh
     const unsubscribeTaskCreated = on('task:created', () => {

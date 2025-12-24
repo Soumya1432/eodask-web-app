@@ -37,8 +37,6 @@ export const ProjectDetailPage: React.FC = () => {
     updateTask,
     deleteTask,
     moveTask,
-    addMember,
-    removeMember,
     clearProject,
   } = useProjects();
 

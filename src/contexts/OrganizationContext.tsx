@@ -32,7 +32,6 @@ export const OrganizationProvider: React.FC<OrganizationProviderProps> = ({ chil
 
   const {
     currentOrganization,
-    organizations,
     isLoading,
     error,
     needsOrganization,

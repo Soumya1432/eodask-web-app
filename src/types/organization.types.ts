@@ -26,8 +26,13 @@ export interface IOrganization {
   createdAt: string;
   updatedAt: string;
   role?: OrganizationRole; // Current user's role in this org
+  userRole?: OrganizationRole; // Alternative field name for user's role
   memberCount?: number;
   projectCount?: number;
+  _count?: {
+    projects: number;
+    members: number;
+  };
 }
 
 // Organization with full details
@@ -56,6 +61,12 @@ export interface IOrganizationMember {
     lastName: string;
     email: string;
     avatar?: string;
+  };
+  // Included when accepting invitation
+  organization?: {
+    id: string;
+    name: string;
+    slug: string;
   };
 }
 

@@ -94,14 +94,7 @@ export const authService = {
 
   async register(credentials: IRegisterCredentials): Promise<IAuthResponse & { organization?: { id: string; name: string; slug: string }; invitationAccepted?: boolean }> {
     try {
-      console.log('=== WEB AUTH SERVICE REGISTER ===');
-      console.log('Credentials:', JSON.stringify(credentials, null, 2));
-      console.log('invitationToken being sent:', credentials.invitationToken);
-
       const response = await authApi.register(credentials);
-
-      console.log('=== WEB AUTH SERVICE RESPONSE ===');
-      console.log('Full response.data:', JSON.stringify(response.data, null, 2));
 
       const { user: apiUser, accessToken, refreshToken, organization, invitationAccepted } = response.data as unknown as {
         user: ApiUser;
@@ -110,9 +103,6 @@ export const authService = {
         organization?: { id: string; name: string; slug: string };
         invitationAccepted?: boolean;
       };
-
-      console.log('Parsed organization:', organization);
-      console.log('Parsed invitationAccepted:', invitationAccepted);
 
       // Map API user to frontend user format
       const user = mapApiUserToUser(apiUser);

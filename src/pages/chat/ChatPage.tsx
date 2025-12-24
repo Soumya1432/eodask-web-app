@@ -26,7 +26,7 @@ export const ChatPage: React.FC = () => {
     fetchMessages,
     sendMessage,
     createRoom,
-    error,
+    operationError: error,
   } = useChat();
 
   const [newMessage, setNewMessage] = useState('');

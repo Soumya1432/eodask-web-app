@@ -23,7 +23,6 @@ export const OrganizationMembersPage: React.FC = () => {
     error,
     fetchMembers,
     fetchInvitations,
-    addMember,
     updateMemberRole,
     removeMember,
     createInvitation,

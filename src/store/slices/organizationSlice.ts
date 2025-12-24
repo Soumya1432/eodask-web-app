@@ -11,7 +11,6 @@ import type {
   IUpdateSettingsData,
   OrganizationRole,
 } from '@/types';
-import { STORAGE_KEYS } from '@/constants';
 
 const CURRENT_ORG_KEY = 'current_organization';
 
@@ -175,7 +174,7 @@ const organizationSlice = createSlice({
       state.isLoading = true;
       state.error = null;
     },
-    switchOrganizationSuccess: (state, action: PayloadAction<IOrganization>) => {
+    switchOrganizationSuccess: (state, _action: PayloadAction<IOrganization>) => {
       state.isLoading = false;
       // Will fetch full details after switch
     },

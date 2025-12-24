@@ -7,7 +7,7 @@ import { useOrganizationContext, OrgRoleGate } from '@/contexts/OrganizationCont
 import { useOrganizations } from '@/hooks/useOrganizations';
 import { LoadingSpinner } from '@/components/common/LoadingSpinner';
 import { Button } from '@/components/common/Button';
-import { FormInput, FormTextarea, FormSelect, FormCheckbox } from '@/components/forms';
+import { FormInput, FormTextarea, FormSelect } from '@/components/forms';
 import { getOrgInitials } from '@/types';
 import { organizationsApi } from '@/lib/api';
 

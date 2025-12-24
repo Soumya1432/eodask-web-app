@@ -4,7 +4,7 @@ import { useProjects, useTheme, useSocket } from '@/hooks';
 import { useAppSelector } from '@/shared/hooks';
 import { LoadingSpinner } from '@/shared/components/ui';
 import { useChat } from '../hooks';
-import type { ChatRoom } from '../types';
+import type { ChatRoom, ChatParticipant } from '../types';
 import toast from 'react-hot-toast';
 
 export const ChatPage: React.FC = () => {
@@ -186,7 +186,7 @@ export const ChatPage: React.FC = () => {
       .slice(0, 2);
   };
 
-  const getSenderName = (sender?: ChatRoom['participants'][0]['user']): string => {
+  const getSenderName = (sender?: ChatParticipant['user']): string => {
     if (!sender) return 'Unknown';
     if (sender.firstName && sender.lastName) {
       return `${sender.firstName} ${sender.lastName}`;

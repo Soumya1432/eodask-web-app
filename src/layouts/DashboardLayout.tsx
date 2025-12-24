@@ -120,7 +120,7 @@ export const DashboardLayout: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const { user, logout } = useAuth();
   const { role, hasAnyPermission, hasAnyRole } = usePermissions();
-  const { currentOrganization, organizations, hasMinRole } = useOrganizations();
+  const { currentOrganization, organizations } = useOrganizations();
 
   // Check if we're in org context
   const isOrgContext = !!slug && !!currentOrganization;

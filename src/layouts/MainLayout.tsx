@@ -1,4 +1,4 @@
-import { Outlet, Link, useNavigate, Route } from 'react-router-dom';
+import { Outlet, Link, useNavigate } from 'react-router-dom';
 import { useAuth, usePermissions } from '@/hooks';
 import { ThemeToggle, PermissionGate, RoleGate } from '@/components';
 import { ROUTES } from '@/constants';
@@ -21,12 +21,19 @@ export const MainLayout: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <Link
-              to={ROUTES.HOME}
-              className="text-xl font-bold text-primary-600 dark:text-primary-400"
-            >
-              onething
-            </Link>
+
+            <div className='flex justify-center-safe items-center gap-2'>
+              <img src='./eodask.png' alt='logo' width={30} height={30} />
+
+              <Link
+                to={ROUTES.HOME}
+                className="text-xl font-bold text-primary-600 dark:text-primary-400"
+              >
+
+                eodask
+              </Link>
+
+            </div>
 
             {/* Navigation */}
             <nav className="hidden md:flex items-center gap-6">
