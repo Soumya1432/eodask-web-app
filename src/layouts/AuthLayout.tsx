@@ -1,10 +1,14 @@
 import { Outlet, Navigate } from 'react-router-dom';
 import { useAuth } from '@/hooks';
+import { useAppSelector } from '@/hooks/useAppSelector';
 import { ThemeToggle, LoadingSpinner } from '@/components';
-import { ROUTES } from '@/constants';
+import { ROUTES, getOrgRoute } from '@/constants';
 
 export const AuthLayout: React.FC = () => {
   const { isAuthenticated, isLoading } = useAuth();
+
+  // Check if user just registered with an invitation - they should go to the org dashboard
+  const acceptedOrganization = useAppSelector((state) => state.auth.acceptedOrganization);
 
   if (isLoading) {
     return <LoadingSpinner fullScreen />;
@@ -12,6 +16,11 @@ export const AuthLayout: React.FC = () => {
 
   // Redirect to dashboard if already authenticated
   if (isAuthenticated) {
+    // If we have an accepted organization from invitation registration,
+    // redirect directly to that organization's dashboard
+    if (acceptedOrganization?.slug) {
+      return <Navigate to={getOrgRoute(ROUTES.ORG_DASHBOARD, acceptedOrganization.slug)} replace />;
+    }
     return <Navigate to={ROUTES.DASHBOARD} replace />;
   }
 

@@ -1,4 +1,4 @@
-import { Outlet, Link, useNavigate } from 'react-router-dom';
+import { Outlet, Link, useNavigate, Route } from 'react-router-dom';
 import { useAuth, usePermissions } from '@/hooks';
 import { ThemeToggle, PermissionGate, RoleGate } from '@/components';
 import { ROUTES } from '@/constants';
@@ -36,6 +36,8 @@ export const MainLayout: React.FC = () => {
               >
                 Home
               </Link>
+              {/* <Link 
+              to={ROUTES.} */}
 
               {isAuthenticated && (
                 <>

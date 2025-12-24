@@ -38,7 +38,10 @@ function* handleLogin(action: PayloadAction<ILoginCredentials>) {
 // Register saga
 function* handleRegister(action: PayloadAction<IRegisterCredentials>) {
   try {
-    const response: IAuthResponse = yield call(
+    const response: IAuthResponse & {
+      organization?: { id: string; name: string; slug: string };
+      invitationAccepted?: boolean;
+    } = yield call(
       authService.register,
       action.payload
     );

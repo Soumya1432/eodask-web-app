@@ -2,6 +2,7 @@ import React, { createContext, useContext, useEffect, useMemo, useRef } from 're
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useOrganizations } from '@/hooks/useOrganizations';
 import { useAuth } from '@/hooks/useAuth';
+import { useAppSelector } from '@/hooks/useAppSelector';
 import type { IOrganizationDetails, OrganizationRole } from '@/types';
 import { LoadingSpinner } from '@/components/common/LoadingSpinner';
 
@@ -25,6 +26,10 @@ export const OrganizationProvider: React.FC<OrganizationProviderProps> = ({ chil
   const navigate = useNavigate();
   const location = useLocation();
   const { isAuthenticated } = useAuth();
+
+  // Get acceptedOrganization from auth state - this is set when user registers with invitation
+  const acceptedOrganization = useAppSelector((state) => state.auth.acceptedOrganization);
+
   const {
     currentOrganization,
     organizations,
@@ -42,26 +47,35 @@ export const OrganizationProvider: React.FC<OrganizationProviderProps> = ({ chil
   const fetchedSlugRef = useRef<string | null>(null);
 
   // Check if user needs to create an organization on mount
+  // Skip if we have an acceptedOrganization from invitation registration
   useEffect(() => {
-    if (isAuthenticated && !hasFetchedRef.current) {
+    if (isAuthenticated && !hasFetchedRef.current && !acceptedOrganization) {
       hasFetchedRef.current = true;
       checkNeedsOrganization();
       fetchOrganizations();
     }
-  }, [isAuthenticated, checkNeedsOrganization, fetchOrganizations]);
+  }, [isAuthenticated, checkNeedsOrganization, fetchOrganizations, acceptedOrganization]);
 
   // Redirect to onboarding if user needs organization
+  // But don't redirect if:
+  // - User is already on an org route (they might have just joined via invitation)
+  // - User has acceptedOrganization from invitation registration (RegisterPage will handle redirect)
+  // - User is on auth routes like /register or /login
   useEffect(() => {
     if (
       isAuthenticated &&
       needsOrganization &&
       !isLoading &&
+      !acceptedOrganization &&
       !location.pathname.startsWith('/onboarding') &&
-      !location.pathname.startsWith('/invite')
+      !location.pathname.startsWith('/invite') &&
+      !location.pathname.startsWith('/org/') &&
+      !location.pathname.startsWith('/register') &&
+      !location.pathname.startsWith('/login')
     ) {
       navigate('/onboarding/create-organization', { replace: true });
     }
-  }, [isAuthenticated, needsOrganization, isLoading, navigate, location.pathname]);
+  }, [isAuthenticated, needsOrganization, isLoading, navigate, location.pathname, acceptedOrganization]);
 
   // Fetch organization when slug changes
   useEffect(() => {

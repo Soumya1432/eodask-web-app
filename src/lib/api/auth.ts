@@ -18,13 +18,14 @@ export const authApi = {
     return response.data;
   },
 
-  register: async (credentials: IRegisterCredentials): Promise<ApiResponse<IAuthResponse>> => {
+  register: async (credentials: IRegisterCredentials & { invitationToken?: string }): Promise<ApiResponse<IAuthResponse & { organization?: { id: string; name: string; slug: string }; invitationAccepted?: boolean }>> => {
     const { firstName, lastName } = splitName(credentials.name);
-    const response = await apiClient.post<ApiResponse<IAuthResponse>>('/auth/register', {
+    const response = await apiClient.post<ApiResponse<IAuthResponse & { organization?: { id: string; name: string; slug: string }; invitationAccepted?: boolean }>>('/auth/register', {
       email: credentials.email,
       password: credentials.password,
       firstName,
       lastName,
+      invitationToken: credentials.invitationToken,
     });
     return response.data;
   },

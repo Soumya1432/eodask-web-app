@@ -5,14 +5,18 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import toast from 'react-hot-toast';
 import { useAuth } from '@/hooks';
 import { Button, FormInput } from '@/components';
-import { ROUTES } from '@/constants';
+import { ROUTES, getOrgRoute } from '@/constants';
 import { registerSchema, type RegisterFormData } from '@/lib/validations';
 
 export const RegisterPage: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [searchParams] = useSearchParams();
-  const { register: authRegister, isLoading, error, isAuthenticated, clearAuthError } = useAuth();
+  const { register: authRegister, isLoading, error, isAuthenticated, acceptedOrganization, clearAuthError } = useAuth();
+
+  // Get invitation token and email from URL params
+  const invitationToken = searchParams.get('invitationToken');
+  const invitedEmail = searchParams.get('email');
 
   const {
     register,
@@ -22,29 +26,42 @@ export const RegisterPage: React.FC = () => {
     resolver: zodResolver(registerSchema),
     defaultValues: {
       name: '',
-      email: '',
+      email: invitedEmail || '',
       password: '',
       confirmPassword: '',
     },
   });
 
-  // Check for returnTo query param first, then location state, then default
   const redirectTo = useMemo(() => {
+    // If we have an accepted org from invitation, go to that org's dashboard
+    if (acceptedOrganization?.slug) {
+      return getOrgRoute(ROUTES.ORG_DASHBOARD, acceptedOrganization.slug);
+    }
     const returnTo = searchParams.get('returnTo');
     if (returnTo) return returnTo;
     return location.state?.from?.pathname || ROUTES.ONBOARDING_CREATE_ORG;
-  }, [searchParams, location.state]);
+  }, [searchParams, location.state, acceptedOrganization]);
 
-  // Track if we've already redirected to prevent infinite loops
   const hasRedirectedRef = useRef(false);
 
   useEffect(() => {
     if (isAuthenticated && !hasRedirectedRef.current) {
+      // If we have an invitation token, wait for acceptedOrganization to be set
+      // This prevents redirecting to create-organization before the org data arrives
+      if (invitationToken && !acceptedOrganization) {
+        // Still waiting for organization data from invitation registration
+        return;
+      }
+
       hasRedirectedRef.current = true;
-      toast.success('Account created successfully!');
+      if (invitationToken && acceptedOrganization) {
+        toast.success('Account created and joined organization!');
+      } else {
+        toast.success('Account created successfully!');
+      }
       navigate(redirectTo, { replace: true });
     }
-  }, [isAuthenticated, navigate, redirectTo]);
+  }, [isAuthenticated, navigate, redirectTo, invitationToken, acceptedOrganization]);
 
   useEffect(() => {
     if (error) {
@@ -63,14 +80,21 @@ export const RegisterPage: React.FC = () => {
       name: data.name,
       email: data.email,
       password: data.password,
+      invitationToken: invitationToken || undefined,
     });
   };
 
   return (
     <div>
       <h2 className="text-2xl font-bold text-gray-900 dark:text-white text-center mb-6">
-        Create Account
+        {invitationToken ? 'Accept Invitation' : 'Create Account'}
       </h2>
+
+      {invitationToken && invitedEmail && (
+        <div className="mb-4 p-3 bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 rounded-lg text-blue-700 dark:text-blue-400 text-sm">
+          Create your account to join the organization. Your email has been pre-filled from the invitation.
+        </div>
+      )}
 
       {error && (
         <div className="mb-4 p-3 bg-red-100 dark:bg-red-900/30 border border-red-200 dark:border-red-800 rounded-lg text-red-700 dark:text-red-400 text-sm">
@@ -94,6 +118,8 @@ export const RegisterPage: React.FC = () => {
           label="Email"
           placeholder="Enter your email"
           error={errors.email?.message}
+          disabled={!!invitedEmail}
+          className={invitedEmail ? 'bg-gray-100 dark:bg-gray-700 cursor-not-allowed' : ''}
           {...register('email')}
         />
 

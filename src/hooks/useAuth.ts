@@ -10,7 +10,7 @@ import type { ILoginCredentials, IRegisterCredentials } from '@/types';
 
 export const useAuth = () => {
   const dispatch = useAppDispatch();
-  const { user, isAuthenticated, isLoading, error } = useAppSelector(
+  const { user, isAuthenticated, isLoading, error, acceptedOrganization } = useAppSelector(
     (state) => state.auth
   );
 
@@ -41,6 +41,7 @@ export const useAuth = () => {
     isAuthenticated,
     isLoading,
     error,
+    acceptedOrganization,
     login,
     register,
     logout,

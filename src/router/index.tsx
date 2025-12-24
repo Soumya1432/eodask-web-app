@@ -6,9 +6,6 @@ import {
   HomePage,
   NotFoundPage,
   ForbiddenPage,
-  LoginPage,
-  RegisterPage,
-  TasksPage,
   AdminDashboardPage,
   UsersPage,
   SettingsPage,
@@ -19,16 +16,16 @@ import {
   OrganizationSettingsPage,
   OrganizationSwitcherPage,
   InviteAcceptPage,
-  ProjectsListPage,
-  ProjectDetailPage,
-  ProfilePage,
-  AnalyticsPage,
-  CalendarPage,
-  ChatPage,
-  FilesPage,
 } from '@/pages';
 import { ROUTES } from '@/constants';
 import { Permission, UserRole } from '@/types';
+
+// Import pages from modules
+import { LoginPage, RegisterPage, ProfilePage } from '@/modules/auth';
+import { ChatPage } from '@/modules/chat';
+import { AnalyticsPage } from '@/modules/analytics';
+import { CalendarPage, ProjectsListPage, ProjectDetailPage, TasksPage } from '@/modules/projects';
+import { FilesPage } from '@/modules/files';
 
 // Wrapper component for organization-scoped routes
 const OrgLayout: React.FC = () => {

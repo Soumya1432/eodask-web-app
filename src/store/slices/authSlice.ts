@@ -22,6 +22,7 @@ const getInitialState = (): IAuthState => {
       isAuthenticated: !!token && !!user,
       isLoading: false,
       error: null,
+      acceptedOrganization: null,
     };
   } catch {
     return {
@@ -31,6 +32,7 @@ const getInitialState = (): IAuthState => {
       isAuthenticated: false,
       isLoading: false,
       error: null,
+      acceptedOrganization: null,
     };
   }
 };
@@ -74,14 +76,16 @@ const authSlice = createSlice({
     registerRequest: (state, _action: PayloadAction<IRegisterCredentials>) => {
       state.isLoading = true;
       state.error = null;
+      state.acceptedOrganization = null;
     },
-    registerSuccess: (state, action: PayloadAction<IAuthResponse>) => {
+    registerSuccess: (state, action: PayloadAction<IAuthResponse & { organization?: { id: string; name: string; slug: string }; invitationAccepted?: boolean }>) => {
       state.isLoading = false;
       state.isAuthenticated = true;
       state.user = action.payload.user;
       state.token = action.payload.token;
       state.refreshToken = action.payload.refreshToken;
       state.error = null;
+      state.acceptedOrganization = action.payload.organization || null;
 
       localStorage.setItem(STORAGE_KEYS.TOKEN, action.payload.token);
       localStorage.setItem(

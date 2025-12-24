@@ -4,6 +4,8 @@ import { Permission, UserRole } from '@/types';
 export const ROUTES = {
   // Public routes
   HOME: '/',
+  ABOUT_US :'/about-us',
+  FEATURES:'/features',
   LOGIN: '/login',
   REGISTER: '/register',
   FORGOT_PASSWORD: '/forgot-password',
@@ -26,7 +28,7 @@ export const ROUTES = {
   ORG_INVITATIONS: '/org/:slug/invitations',
   ORG_CHAT: '/org/:slug/chat',
   ORG_REPORTS: '/org/:slug/reports',
-
+  
   // Invitation acceptance route
   INVITE_ACCEPT: '/invite/:token',
 
