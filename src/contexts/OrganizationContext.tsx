@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useMemo, useRef } from 'react';
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useOrganizations } from '@/hooks/useOrganizations';
 import { useAuth } from '@/hooks/useAuth';
@@ -88,12 +88,12 @@ export const OrganizationProvider: React.FC<OrganizationProviderProps> = ({ chil
   }, [slug, isAuthenticated, isLoading, fetchOrganizationBySlug]);
 
   // Handle switch organization
-  const switchOrganization = (newSlug: string) => {
+  const switchOrganization = useCallback((newSlug: string) => {
     if (newSlug !== slug) {
       // Navigate to the new organization's dashboard
       navigate(`/org/${newSlug}/dashboard`);
     }
-  };
+  }, [slug, navigate]);
 
   const value = useMemo(
     () => ({
@@ -104,7 +104,7 @@ export const OrganizationProvider: React.FC<OrganizationProviderProps> = ({ chil
       hasMinRole,
       switchOrganization,
     }),
-    [currentOrganization, isLoading, error, hasMinRole]
+    [currentOrganization, isLoading, error, hasMinRole, switchOrganization]
   );
 
   // Show loading while checking organization status

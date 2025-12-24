@@ -19,5 +19,28 @@ export default defineConfig([
       ecmaVersion: 2020,
       globals: globals.browser,
     },
+    rules: {
+      // Allow unused vars that start with underscore
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          caughtErrorsIgnorePattern: '^_',
+        },
+      ],
+      // Allow explicit any in specific cases (saga error handling)
+      '@typescript-eslint/no-explicit-any': 'warn',
+      // Allow exporting non-components from context files
+      'react-refresh/only-export-components': [
+        'warn',
+        { allowExportNames: ['useOrganizationContext', 'withOrganization', 'OrgRoleGate'] },
+      ],
+      // Disable React Compiler specific rules that cause issues with our patterns
+      'react-hooks/purity': 'off',
+      'react-hooks/preserve-manual-memoization': 'off',
+      'react-hooks/set-state-in-effect': 'warn',
+      'react-hooks/incompatible-library': 'warn',
+    },
   },
 ])

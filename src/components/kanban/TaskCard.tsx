@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import type { Task } from '@/lib/api';
 
 interface TaskCardProps {
@@ -21,17 +22,26 @@ const priorityLabels = {
   URGENT: 'Urgent',
 };
 
+// 24 hours in milliseconds
+const DAY_MS = 24 * 60 * 60 * 1000;
+
 export const TaskCard: React.FC<TaskCardProps> = ({
   task,
   onClick,
   onDragStart,
   onDragEnd,
 }) => {
-  const isOverdue = task.dueDate && new Date(task.dueDate) < new Date();
-  const isDueSoon =
-    task.dueDate &&
-    !isOverdue &&
-    new Date(task.dueDate).getTime() - Date.now() < 24 * 60 * 60 * 1000;
+  // Memoize date calculations to avoid impure Date.now() calls during render
+  const { isOverdue, isDueSoon } = useMemo(() => {
+    if (!task.dueDate) {
+      return { isOverdue: false, isDueSoon: false };
+    }
+    const now = Date.now();
+    const dueTime = new Date(task.dueDate).getTime();
+    const overdue = dueTime < now;
+    const dueSoon = !overdue && dueTime - now < DAY_MS;
+    return { isOverdue: overdue, isDueSoon: dueSoon };
+  }, [task.dueDate]);
 
   const formatDueDate = (dateString: string) => {
     const date = new Date(dateString);

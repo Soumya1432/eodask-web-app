@@ -1,78 +1,57 @@
-<<<<<<< HEAD
-# onething-web-app
-OneThing is a focus-first, organization-based productivity app that helps teams and individuals create projects, prioritize a single high-impact task, and make consistent progress .
-=======
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Eodask | A Project Manager Tool
+A multi organization task manegement platform that helps teams manage work efficiently by organizing tasks under Organizations --> Project  --> Tasks .
 
-Currently, two official plugins are available:
+## OverView
+This application allows users to :
+ - Create and manage organization (Max 3)
+ - Work inside multiple projects under and organization
+ - Manage tasks within projects
+ - Collaborate with team members in a structure workflow
+ - Project Based chat , file sharing functionality
+ This system is desgined for scalibility simple user friendly, team collaborations and real world project management.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+ ## Application Flow
+ 1. Signup, and Create Organizations
+   - User can create one or more organization
+   - Each organization represents a compaby or team
+ 2. Enter Organizations
+   - Access organization specific dashboard
+   - View all projects under that organization
+ 3. Create Projects 
+   - Create multiple projects inside an organization
+   - Each project has its own tasks and members 
+ 4. Enter projects
+   - View project details
+   - Create, update, and manage tasks
+   - Project based live chat 
+ 5. Task Management 
+   - Create tasks with title, descriptions, priority, and status
+   - Update task status(Todo, In progress, Done, and also customize coloumn)
+   - Assign tasks to team members 
+   - Upload file for that specific task
 
-## React Compiler
+## Key Features
+  - User Authentication & Authorization
+  - Manage role based control actions 
+  - Invite team members
+  - live chat 
+  - file sharing 
+  - kanban board view 
+  - Analytics Dashboard
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+## Tech Stack 
 
-## Expanding the ESLint configuration
+  1. Frontend - Reactjs (vite), Tailwindcss, Axios, Reduxjs,      Redux  Saga
+ 2. Backend - Expresjs, Cron Jobs
+ 3. Database & ORM - PostgreSQL, Prisma   
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Future Enhancements
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- Reports
+- Budget Making
+- Real time notifications (sound also)
+- Customize whole page theme based
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
->>>>>>> 30ff2a5 (complete basic functionality of web-app)
+  
+  
