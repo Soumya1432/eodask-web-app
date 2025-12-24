@@ -37,7 +37,7 @@ export const AuthLayout: React.FC = () => {
           {/* Logo */}
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-primary-600 dark:text-primary-400">
-              onething
+              eodask
             </h1>
             <p className="mt-2 text-gray-600 dark:text-gray-400">
               Focus on what matters most
@@ -54,7 +54,7 @@ export const AuthLayout: React.FC = () => {
       {/* Footer */}
       <footer className="py-4 text-center">
         <p className="text-sm text-gray-500 dark:text-gray-400">
-          &copy; {new Date().getFullYear()} onething
+          &copy; {new Date().getFullYear()} eodask
         </p>
       </footer>
     </div>

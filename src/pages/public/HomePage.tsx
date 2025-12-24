@@ -9,7 +9,7 @@ export const HomePage: React.FC = () => {
   return (
     <div className="text-center py-16">
       <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-        Welcome to <span className="text-primary-600">onething</span>
+        Welcome to <span className="text-primary-600">eodask</span>
       </h1>
       <p className="text-xl text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto">
         Focus on what matters most. A productivity app with role-based access

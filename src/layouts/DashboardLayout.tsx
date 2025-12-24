@@ -365,7 +365,7 @@ export const DashboardLayout: React.FC = () => {
               to={ROUTES.ORGANIZATIONS}
               className="text-xl font-bold text-primary-600 dark:text-primary-400"
             >
-              onething
+              eodask
             </Link>
           )}
           <button
