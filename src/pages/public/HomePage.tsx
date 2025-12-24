@@ -69,23 +69,7 @@ export const HomePage: React.FC = () => {
         </div>
       </div>
 
-      {/* Demo credentials */}
-      <div className="mt-16 p-6 bg-gray-100 dark:bg-gray-800 rounded-xl max-w-md mx-auto">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-          Demo Credentials
-        </h3>
-        <div className="text-left text-sm space-y-2">
-          <p className="text-gray-600 dark:text-gray-400">
-            <strong>Admin:</strong> admin@example.com / admin123
-          </p>
-          <p className="text-gray-600 dark:text-gray-400">
-            <strong>Manager:</strong> manager@example.com / manager123
-          </p>
-          <p className="text-gray-600 dark:text-gray-400">
-            <strong>User:</strong> user@example.com / user123
-          </p>
-        </div>
-      </div>
+    
     </div>
   );
 };
